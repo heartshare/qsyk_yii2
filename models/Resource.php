@@ -129,8 +129,8 @@ class Resource extends \yii\db\ActiveRecord
         return !empty($this->resourceCount) ? $this->resourceCount->resource_collect : 0;
     }
     public function getPubTimeElapsed() {
-        return $this->pub_time;
-//        return QsBaseTime::time_get_past($this->pub_time);
+//        return $this->pub_time;
+        return QsBaseTime::time_get_past($this->pub_time);
     }
 
     public function fields()

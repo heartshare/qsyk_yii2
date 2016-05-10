@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\components\QsEncodeHelper;
 use Yii;
 
 /**
@@ -28,6 +29,33 @@ class ResourceVideo extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'resource_video';
+    }
+
+    public function getUrl()
+    {
+        return $this->download;
+    }
+    public function getSid()
+    {
+        return QsEncodeHelper::setSid($this->id);
+    }
+    public function getThumb()
+    {
+        return QsEncodeHelper::setSid($this->cover_img);
+    }
+    public function fields()
+    {
+//        $fields = parent::fields();
+        $fields = [
+            'sid',
+            'thumb',
+            'width',
+            'height',
+            'url',
+            'length',
+        ];
+        // remove fields that contain sensitive information
+        return $fields;
     }
 
     /**

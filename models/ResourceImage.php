@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\components\QsEncodeHelper;
 use Yii;
 
 /**
@@ -34,6 +35,11 @@ use Yii;
  */
 class ResourceImage extends \yii\db\ActiveRecord
 {
+    const EXT_HASH = [
+        'image/jpeg'=>'jpg',
+        'image/png'=>'png',
+        'image/gif'=>'gif',
+    ];
     /**
      * @inheritdoc
      */
@@ -54,6 +60,34 @@ class ResourceImage extends \yii\db\ActiveRecord
             [['mime'], 'string', 'max' => 30],
             [['md5'], 'string', 'max' => 32],
         ];
+    }
+
+
+    public function fields()
+    {
+//        $fields = parent::fields();
+        $fields = [
+            'id',
+            'sid',
+            'width',
+            'height',
+            'size',
+            'mime',
+            'dynamic',
+            'extension',
+
+        ];
+        // remove fields that contain sensitive information
+        return $fields;
+    }
+
+    public function getExtension()
+    {
+        return self::EXT_HASH[$this->mime];
+    }
+    public function getSid()
+    {
+        return QsEncodeHelper::setSid($this->id);
     }
 
     /**
