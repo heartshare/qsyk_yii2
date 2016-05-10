@@ -27,6 +27,18 @@ use Yii;
  */
 class Resource extends \yii\db\ActiveRecord
 {
+
+    const TYPE_ALL = 0;
+    const TYPE_TEXT = 1;
+    const TYPE_IMAGE = 2;
+    const TYPE_VIDEO = 3;
+    const TYPE_VOICE = 4;
+
+    const STATUS_WAIT = 0;
+    const STATUS_ACTIVE = 2;
+    const STATUS_REPORT = 3;
+    const STATUS_PRE_PUB = 4;
+    const STATUS_DELETE = 99;
     /**
      * @inheritdoc
      */

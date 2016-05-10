@@ -83,10 +83,11 @@ class ResourceController extends Controller
 		$request = Yii::$app->request;
 		$type = $request->get('type', 0);
 		$queryBuilder = Resource::find();
+        $where = ['status'=>Resource::STATUS_ACTIVE];
 		if ($type) {
-			$queryBuilder = $queryBuilder->where(['type'=>$type]);
+            $where['type'] = $type;
 		}
-		$queryBuilder = $queryBuilder->orderBy('id desc');
+		$queryBuilder = $queryBuilder->where($where)->andWhere(['>','userid',0])->orderBy('id desc');
 		
         return new ActiveDataProvider([
             'query' => $queryBuilder 
