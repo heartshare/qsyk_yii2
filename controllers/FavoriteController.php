@@ -8,7 +8,10 @@
 
 namespace app\controllers;
 
+use app\models\Resource;
+use app\models\ResourceFavorite;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\ContentNegotiator;
 use yii\rest\Controller;
@@ -32,6 +35,23 @@ class FavoriteController extends Controller
         ];
 
         return $behaviors;
+    }
+
+    public function actionIndex()
+    {
+
+        $user = Yii::$app->user->identity;
+        return new ActiveDataProvider([
+            'query' => ResourceFavorite::find()
+                ->where(['user_id'=>$user->id])
+            ->andWhere(['>', 'resource_id', 0])
+            ->orderBy('time desc')
+        ]);
+    }
+
+    public function actionView($id)
+    {
+        return Resource::findOne($id);
     }
 
 }
