@@ -80,13 +80,16 @@ class ResourceController extends Controller
     public function actionIndex()
     {
 
-        $request = Yii::$app->request;
-        $type = $request->get('type');
-        
+		$request = Yii::$app->request;
+		$type = $request->get('type', 0);
+		$queryBuilder = Resource::find();
+		if ($type) {
+			$queryBuilder = $queryBuilder->where(['type'=>$type]);
+		}
+		$queryBuilder = $queryBuilder->orderBy('id desc');
+		
         return new ActiveDataProvider([
-            'query' => Resource::find()
-                ->where(['type'=>$type])
-                ->orderBy('id desc')
+            'query' => $queryBuilder 
         ]);
     }
 
