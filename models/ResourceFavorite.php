@@ -28,7 +28,7 @@ class ResourceFavorite extends \yii\db\ActiveRecord
 
     public function getResource()
     {
-        return $this->hasOne(Resource::className(), ['resource_id' => 'id']);
+        return $this->hasOne(Resource::className(), ['id' => 'resource_id']);
     }
 
     /**
