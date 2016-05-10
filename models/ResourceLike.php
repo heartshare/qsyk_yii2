@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\components\QsBaseTime;
 use Yii;
 
 /**
@@ -32,6 +33,17 @@ class ResourceLike extends \yii\db\ActiveRecord
         return $this->hasOne(ResourceCount::className(), ['resource_id' => 'resource_id']);
     }
 
+    public function getResource()
+    {
+        return $this->hasOne(Resource::className(), ['id' => 'resource_id']);
+    }
+
+    public function getTimeElapsed()
+    {
+        return QsBaseTime::time_get_past($this->time);
+
+    }
+
     /**
      * @inheritdoc
      */
@@ -42,6 +54,15 @@ class ResourceLike extends \yii\db\ActiveRecord
             [['resource_id', 'user_id', 'status',  'time'], 'integer'],
             [['user_mid'], 'string', 'max' => 32],
         ];
+    }
+
+    public function fields()
+    {
+        $fields = [
+            'resource',
+            'timeElapsed'
+        ];
+        return $fields;
     }
 
     /**

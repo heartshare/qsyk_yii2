@@ -3,13 +3,13 @@
  * Created by PhpStorm.
  * User: cx
  * Date: 2016/5/10
- * Time: 16:57
+ * Time: 18:00
  */
 
 namespace app\controllers;
 
-use app\models\Resource;
-use app\models\ResourceFavorite;
+
+use app\models\ResourceLike;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBearerAuth;
@@ -17,7 +17,7 @@ use yii\filters\ContentNegotiator;
 use yii\rest\Controller;
 use yii\web\Response;
 
-class FavoriteController extends Controller
+class LikeController  extends Controller
 {
 
     public function behaviors()
@@ -39,19 +39,18 @@ class FavoriteController extends Controller
 
     public function actionIndex()
     {
-
         $user = Yii::$app->user->identity;
         return new ActiveDataProvider([
-            'query' => ResourceFavorite::find()
-                ->where(['user_id'=>$user->id])
-            ->andWhere(['>', 'resource_id', 0])
-            ->orderBy('time desc')
+            'query' => ResourceLike::find()
+                ->where(['user_id'=>$user->id,'status'=>1])
+                ->andWhere(['>', 'resource_id', 0])
+                ->orderBy('time desc')
         ]);
     }
 
     public function actionView($id)
     {
-        return ResourceFavorite::findOne($id);
+        return ResourceLike::findOne($id);
     }
 
 }
