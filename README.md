@@ -38,7 +38,8 @@ API
 - sid : 资源sid
     
 ### 资源举报\[POST\]\[Auth\]
-       /resource/hate       
+
+       /resource/report       
 参数
 - sid : 资源sid
 - type : 举报类型
