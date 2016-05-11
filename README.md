@@ -1,6 +1,6 @@
 API
 ===
-\[Auth\]表示Header需要传Authorization
+**\[Auth\]**表示Header需要传Authorization
 
 示例：
 
@@ -9,6 +9,7 @@ API
       /user/register       
 参数
 - uuid : 设备uuid
+
 返回
 
         {
