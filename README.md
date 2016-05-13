@@ -1,4 +1,4 @@
-[推送相关](/JPush.md)
+[推送相关](/JPUSH.md)
 
 API
 ===
