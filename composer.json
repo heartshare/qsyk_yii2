@@ -20,7 +20,8 @@
         "yiisoft/yii2-swiftmailer": "*",
         "kartik-v/yii2-helpers": "dev-master",
         "yiisoft/yii2-smarty": "^2.0",
-		"nizsheanez/yii2-asset-converter": "1.*"
+		"nizsheanez/yii2-asset-converter": "1.*",
+        "yiisoft/yii2-jui": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

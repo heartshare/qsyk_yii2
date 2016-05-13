@@ -26,6 +26,7 @@ $config = [
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
+            'maxSourceLines' => 20,
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
@@ -48,13 +49,14 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'enableStrictParsing' => true,
+//            'enableStrictParsing' => true,
             'rules' => [
-                '/' => 'site/index',
-                '<controller:\w+>' => '<controller>/index',
-                '<controller:\w+>/<id:\d+>' => '<controller>/view',
-                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
-                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'resource'],
+//                '/' => 'site/index',
+//                '<controller:\w+>' => '<controller>/index',
+//                '<controller:\w+>/<id:\d+>' => '<controller>/view',
+//                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+//                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ],
         ],
 
