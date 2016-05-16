@@ -41,6 +41,12 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 1;
     const DEVICE_TYPE = 1;
 
+
+
+//    const SCENARIO_REGISTER = 'register';
+
+
+
     /**
      * @inheritdoc
      */
@@ -62,9 +68,11 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+
+
     public function fields()
     {
-        $fields = ['auth_key'];
+        $fields = ['auth_key', 'points', 'nick_name'];
         // remove fields that contain sensitive information
 //        $fields[] = 'drawResult';
 //        $fields[] = 'periodDesc';

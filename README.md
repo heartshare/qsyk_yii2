@@ -56,3 +56,12 @@ API
 ### 赞过的资源列表\[GET\]\[Auth\]
 
       /like      
+
+
+### 分享任务\[POST\]\[Auth\]
+
+       /user/share-task  
+            
+### 登录任务\[POST\]\[Auth\]
+
+       /user/sign-task    

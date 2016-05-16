@@ -12,6 +12,8 @@ namespace app\controllers;
 use app\models\LoginForm;
 use app\models\RegisterForm;
 use app\models\SignHistorySearch;
+use app\models\User;
+use app\models\UserTaskSearch;
 use Yii;
 use yii\base\Controller;
 use yii\filters\AccessControl;
@@ -28,7 +30,7 @@ class UserController extends Controller
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBearerAuth::className(),
-            'only' => ['dashboard', 'sign'],
+            'only' => ['dashboard', 'sign', 'info', 'sign-task'],
         ];
         $behaviors['contentNegotiator'] = [
             'class' => ContentNegotiator::className(),
@@ -38,10 +40,10 @@ class UserController extends Controller
         ];
         $behaviors['access'] = [
             'class' => AccessControl::className(),
-            'only' => ['dashboard', 'sign'],
+            'only' => ['dashboard', 'sign', 'info', 'sign-task'],
             'rules' => [
                 [
-                    'actions' => ['dashboard', 'sign'],
+                    'actions' => ['dashboard', 'sign-task', 'info'],
                     'allow' => true,
                     'roles' => ['@'],
                 ],
@@ -50,6 +52,26 @@ class UserController extends Controller
         return $behaviors;
     }
 
+    public function actionInfo() {
+        $user = Yii::$app->user->identity;
+        return $user;
+    }
+
+    public function actionSignTask() {
+        $taskSearch = new UserTaskSearch();
+        if ($taskSearch->load(Yii::$app->request->post(), '') && $taskSearch->sign()) {
+            return ["status"=>0, "message"=>""];
+        }
+        return ["status"=>1, "message"=>implode(",", $taskSearch->getFirstErrors())];
+    }
+
+    public function actionShareTask() {
+        $taskSearch = new UserTaskSearch();
+        if ($taskSearch->load(Yii::$app->request->post(), '') && $taskSearch->share()) {
+            return ["status"=>0, "message"=>""];
+        }
+        return ["status"=>1, "message"=>implode(",", $taskSearch->getFirstErrors())];
+    }
     public function actionAllowsign()
     {
         $user = Yii::$app->user->identity;
