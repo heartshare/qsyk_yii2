@@ -17,7 +17,7 @@ class ResourceReportForm extends Model
 
     public $sid;
     private $userId;
-    private $type;
+    public $type;
 
     /**
      * @return array the validation rules.
