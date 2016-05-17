@@ -15,10 +15,10 @@ use app\models\SignHistorySearch;
 use app\models\User;
 use app\models\UserTaskSearch;
 use Yii;
-use yii\base\Controller;
 use yii\filters\AccessControl;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\ContentNegotiator;
+use yii\rest\Controller;
 use yii\web\Response;
 
 class UserController extends Controller
@@ -30,7 +30,7 @@ class UserController extends Controller
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBearerAuth::className(),
-            'only' => ['dashboard', 'sign', 'info', 'sign-task'],
+            'only' => ['dashboard', 'sign', 'info', 'sign-task',  'share-task'],
         ];
         $behaviors['contentNegotiator'] = [
             'class' => ContentNegotiator::className(),
@@ -40,10 +40,10 @@ class UserController extends Controller
         ];
         $behaviors['access'] = [
             'class' => AccessControl::className(),
-            'only' => ['dashboard', 'sign', 'info', 'sign-task'],
+            'only' => ['dashboard', 'sign', 'info', 'sign-task', 'share-task'],
             'rules' => [
                 [
-                    'actions' => ['dashboard', 'sign-task', 'info'],
+                    'actions' => ['dashboard', 'sign-task', 'info',  'share-task'],
                     'allow' => true,
                     'roles' => ['@'],
                 ],
@@ -56,6 +56,7 @@ class UserController extends Controller
         $user = Yii::$app->user->identity;
         return $user;
     }
+
 
     public function actionSignTask() {
         $taskSearch = new UserTaskSearch();
@@ -72,6 +73,7 @@ class UserController extends Controller
         }
         return ["status"=>1, "message"=>implode(",", $taskSearch->getFirstErrors())];
     }
+
     public function actionAllowsign()
     {
         $user = Yii::$app->user->identity;

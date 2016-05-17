@@ -52,6 +52,16 @@ $config = [
 //            'enableStrictParsing' => true,
             'rules' => [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'resource'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'user-task'],
+                [
+                    'class'=>'yii\rest\UrlRule',
+                    'controller'=>[
+                        'user',
+                    ],
+                    'extraPatterns' => [
+                        'GET info' => 'info',
+                    ]
+                ],
 //                '/' => 'site/index',
 //                '<controller:\w+>' => '<controller>/index',
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',

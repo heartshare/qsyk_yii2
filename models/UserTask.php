@@ -34,6 +34,22 @@ class UserTask extends \yii\db\ActiveRecord
             [['finish_time'], 'safe'],
         ];
     }
+    public function getTask() {
+        return self::hasOne(Task::className(), ['id'=>'task_id']);
+    }
+
+    public function fields()
+    {
+        $fields = parent::fields();
+        unset($fields['id'], $fields['user_id'], $fields['finish_time'], $fields['task_id']);
+        $fields[] = 'finishTimeDesc';
+        $fields[] = 'task';
+        return $fields; 
+    }
+
+    public function getFinishTimeDesc() {
+        return date('Y-m-d H:i:s', $this->finish_time);
+    }
 
     /**
      * @inheritdoc

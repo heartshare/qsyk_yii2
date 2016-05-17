@@ -80,6 +80,34 @@ class User extends ActiveRecord implements IdentityInterface
         return $fields;
     }
 
+    public function extraFields()
+    {
+        return ['taskList'];
+    }
+
+
+    public function getTaskList()
+    {
+        $list = [];
+        $allTask = Task::find()->all();
+        $startTime = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
+        $endTime = mktime(0, 0, 0, date('m'), date('d') + 1, date('Y'));
+        foreach ($allTask as $task) {
+            $taskCount = UserTask::find()
+                ->where([
+                    'user_id' => $this->id,
+                    'task_id' => $task->id,
+                ])
+                ->andWhere(['between', 'finish_time', $startTime, $endTime])
+                ->count();
+            $list[] = [
+                'desc'=>$task->desc,
+                'current'=>intval($taskCount),
+                'total'=>$task->daily_limit,
+            ];
+        }
+        return $list;
+    }
     /**
      * @inheritdoc
      */
