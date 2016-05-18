@@ -60,7 +60,7 @@ class UserController extends Controller
 
     public function actionSignTask() {
         $taskSearch = new UserTaskSearch();
-        if ($taskSearch->load(Yii::$app->request->post(), '') && $taskSearch->sign()) {
+        if ($taskSearch->sign()) {
             return ["status"=>0, "message"=>""];
         }
         return ["status"=>1, "message"=>implode(",", $taskSearch->getFirstErrors())];
@@ -68,7 +68,7 @@ class UserController extends Controller
 
     public function actionShareTask() {
         $taskSearch = new UserTaskSearch();
-        if ($taskSearch->load(Yii::$app->request->post(), '') && $taskSearch->share()) {
+        if ($taskSearch->share()) {
             return ["status"=>0, "message"=>""];
         }
         return ["status"=>1, "message"=>implode(",", $taskSearch->getFirstErrors())];
