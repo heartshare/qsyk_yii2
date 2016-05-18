@@ -65,3 +65,10 @@ API
 ### 登录任务\[POST\]\[Auth\]
 
        /user/sign-task    
+       
+### 用户信息\[GET\]\[Auth\]
+
+       /user/info  
+       
+可选参数：
+       expand=taskList
