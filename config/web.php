@@ -7,6 +7,11 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
+        'response' => [
+            'formatters' => [
+                'encrypt' => 'app\components\EncryptFormatter',
+            ],
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'fYkPk2S60XIhaGM00ntsdwV_DpY3w86T',
@@ -53,6 +58,8 @@ $config = [
             'rules' => [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'resource'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'user-task'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'betting'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'award'],
                 [
                     'class'=>'yii\rest\UrlRule',
                     'controller'=>[
