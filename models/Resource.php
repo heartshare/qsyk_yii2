@@ -102,12 +102,12 @@ class Resource extends \yii\db\ActiveRecord
 
     public function getUserName()
     {
-        return $this->user->user_name;
+        return !empty($this->user) ? $this->user->user_name : '';
     }
 
     public function getUserAvatar()
     {
-        return QsEncodeHelper::setSid($this->user->avatar_img);
+        return !empty($this->user) ? QsEncodeHelper::setSid($this->user->avatar_img) : '';
     }
     public function getDig() {
         return !empty($this->resourceCount) ? $this->resourceCount->resource_dig : 0;
