@@ -1,0 +1,76 @@
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title">{{message}}</h3>
+    </div>
+    <div class="modal-footer">
+        <button class="btn " ng-class='{"btn-primary":!status, "btn-danger":status }' type="button" ng-click="ok()">确定</button>
+        <button class="btn btn-default" type="button" ng-click="cancel()">返回</button>
+    </div>
+</script>
+<div class="container">
+<div class="row bar-top">
+    <div class="col-xs-4 text-right">
+
+    </div>
+    <div class="col-xs-4 text-center">
+        <p class="text-small">第{{period}}期</p>
+    </div>
+    <div class="col-xs-4">
+    </div>
+</div>
+<div>
+
+
+    <div class=" padding-bottom">
+        <h5>红球号码<span class="padding-left text-small">选择6个红球</span>
+            <span class="glyphicon glyphicon-phone padding-left"/>
+        </h5>
+    </div>
+
+    <div class="row padding-bottom" ng-repeat="rows in reds">
+        <div class="col-xs-2" ng-repeat="column in rows">
+        <span ng-class="{'red-dark':!inArray(column, selectedReds), 'red-light':inArray(column, selectedReds)}"
+              class="center circle-text-medium" data="{{column}}" ng-if="column <= 35"
+              ng-click="redToggle(column)">{{column}}</span>
+        </div>
+
+    </div>
+
+    <div class="padding-bottom">
+        <h5>蓝球号码<span class="padding-left text-small">选择1个蓝球</span>
+            <span class="glyphicon glyphicon-phone padding-left"/>
+        </h5>
+    </div>
+
+    <div class="row padding-bottom" ng-repeat="rows in blues">
+        <div class="col-xs-2" ng-repeat="column in rows">
+        <span ng-class="{'blue-dark':!inArray(column, selectedBlues), 'blue-light':inArray(column, selectedBlues)}"
+              class="center circle-text-medium" data="{{column}}" ng-if="column <= 12"
+              ng-click="blueToggle(column)">{{column}}</span>
+        </div>
+
+    </div>
+
+
+    <div class="row fixed-bottom row-center">
+        <div class="col-xs-4  padding-top padding-bottom">
+            <button class="btn-info btn btn-sm padding-right padding-left"
+                    ng-click="randomSelected()">
+                机 选
+            </button>
+        </div>
+        <div class="col-xs-4 text-center">
+
+        </div>
+        <div class="col-xs-4 text-right padding-top padding-bottom">
+            <button class="btn-primary btn btn-sm padding-right padding-left"
+                    ng-click="submitPick()" ng-class="{'disabled':isSubmit}">
+                <i class='fa fa-circle-o-notch fa-spin' ng-hide="!isSubmit"></i>
+                {{isSubmit ? ' 提交中' :  '确 定'}}
+            </button>
+        </div>
+    </div>
+</div>
+</div>
+
+

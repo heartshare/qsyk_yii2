@@ -1,0 +1,28 @@
+<div class="container padding-top-large">
+    <div class="row padding-bottom">
+        <div class="col-xs-4"><p class="text-small text-vertical">中奖号码：</p></div>
+        <div class="col-xs-8" ng-if="!item.awardNumbers"><p class="text-small" >尚未开奖</p></div>
+        <div class="col-xs-1" ng-if="item.awardNumbers" ng-repeat="number in item.awardNumbers track by $index">
+            <span ng-class="{'blue-dark':$last, 'red-dark':!$last}" class=" center circle-text" >{{number}}</span>
+        </div>
+        <div class="col-xs-1"  ng-if="item.awardNumbers" ></div>
+    </div>
+    <div class="row padding-bottom">
+        <div class="col-xs-4"><p class="text-small text-vertical">我投注的：</p></div>
+        <div class="col-xs-1" ng-repeat="number in item.numbers track by $index">
+            <span ng-class="{'blue-dark':$last, 'red-dark':!$last}" class=" center circle-text" >{{number}}</span>
+        </div>
+        <div class="col-xs-1"></div>
+    </div>
+    <div class="row padding-bottom">
+        <div class="col-xs-6"><p class="text-small text-vertical">期号：{{item.period}}</p></div>
+        <div class="col-xs-6"><p class="text-small text-vertical">时间：{{item.pickTimeDesc}}</p></div>
+
+    </div>
+    <div class="row padding-bottom">
+        <div class="col-xs-12 center">
+            <h4>开奖分布</h4>
+        </div>
+
+    </div>
+</div>

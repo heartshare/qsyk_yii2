@@ -8,7 +8,7 @@ use yii\base\Model;
 
 class UserTaskSearch extends Model
 {
-    public $user = false;
+    private $user = false;
     private $hasLoginOnce = false;
 
     /**

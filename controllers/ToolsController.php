@@ -44,4 +44,8 @@ class ToolsController extends Controller
         $id = Yii::$app->request->get('id');
         return QsEncodeHelper::setSid($id);
     }
+    public function actionId() {
+        $sid = Yii::$app->request->get('sid');
+        return QsEncodeHelper::getSid($sid);
+    }
 }

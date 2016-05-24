@@ -11,8 +11,7 @@ use yii\base\Model;
 class LoginForm extends Model
 {
     public $username;
-    public $password = 'helloworld';
-    public $auth_key;
+    public $password;
     public $rememberMe;
     private $_user = false;
 
@@ -26,9 +25,9 @@ class LoginForm extends Model
     {
         return [
             // username and password are both required
-            [['uuid', 'password'], 'required'],
+            [['username', 'password'], 'required'],
             // rememberMe must be a boolean value
-            //['rememberMe', 'boolean'],
+            ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
         ];
     }
@@ -39,6 +38,7 @@ class LoginForm extends Model
         if ($this->validate()) {
             return Yii::$app->user->login($this->getUser()/*, $this->rememberMe ? 3600 * 24 * 30 : 0*/);
         } else {
+
             return false;
         }
     }

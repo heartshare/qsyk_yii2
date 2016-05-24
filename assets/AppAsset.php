@@ -21,6 +21,7 @@ class AppAsset extends AssetBundle
         'css/style.css',
         'css/navbar.less',
         'css/site.less',
+        'lib/angular/angular-csp.css',
     ];
     public $js = [
     ];

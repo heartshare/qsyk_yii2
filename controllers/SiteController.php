@@ -28,7 +28,7 @@ class SiteController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'logout' => ['post', 'get'],
                 ],
             ],
         ];
@@ -54,17 +54,25 @@ class SiteController extends Controller
 
     public function actionLogin()
     {
+        $uuid = Yii::$app->request->get('uuid');
+        $redirectUri = Yii::$app->request->get('redirect_uri');
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+//            echo "isGuest";
+//            return;
+            return $this->redirect([$redirectUri . '/index/#!']);
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+        $model->setAttributes([
+            'username'=>$uuid,
+            'password'=>Yii::$app->params['password'],
+            'rememberMe'=>true,
+        ], false);
+
+        if (!$model->login()) {
+            return $this->redirect(['site/login-failed']);
         }
-        return $this->render('login', [
-            'model' => $model,
-        ]);
+        return $this->redirect([$redirectUri. '/index/#!']);
     }
 
     public function actionLogout()
