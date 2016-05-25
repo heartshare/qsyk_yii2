@@ -79,7 +79,7 @@ API
        
 ### 资源列表\[GET\]\[REST\]
        
-       /resource
+       /resources
        
 参数：
        type=[0,1,2,3]&dynamic=[0,1]
