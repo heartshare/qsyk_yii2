@@ -8,6 +8,7 @@
 
 namespace app\controllers;
 
+use app\components\QsEncodeHelper;
 use app\models\Resource;
 use app\models\ResourceFavoriteForm;
 use app\models\ResourceLike;
@@ -77,6 +78,8 @@ class ResourceController extends Controller
         return ["status"=>1, "message"=>implode(",", $reportForm->getFirstErrors())];
     }
 
+
+
     public function actionIndex()
     {
 
@@ -103,8 +106,8 @@ class ResourceController extends Controller
         ]);
     }
 
-    public function actionView($id)
+    public function actionView($sid)
     {
-        return Resource::findOne($id);
+        return Resource::findOne(QsEncodeHelper::getSid($sid));
     }
 }

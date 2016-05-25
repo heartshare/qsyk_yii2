@@ -68,6 +68,7 @@ $config = [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'user-task'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'betting'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'award'],
+
                 [
                     'class'=>'yii\rest\UrlRule',
                     'controller'=>[
@@ -77,6 +78,7 @@ $config = [
                         'GET info' => 'info',
                     ]
                 ],
+                'GET,HEAD resources/<sid>' => 'resource/view',
 //                '/' => 'site/index',
 //                '<controller:\w+>' => '<controller>/index',
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',
