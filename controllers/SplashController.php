@@ -26,6 +26,12 @@ class SplashController extends Controller
 		}
         $info = ConfigInfo::getConfigInfo();
         $minfo = ConfigInfo::getMobileInfo();
+		if ($minfo['system'] == 'android') {
+			$info['config']['lotteryEnable'] = 1;
+		}
+		elseif ($minfo['appversion'] == '10004') {
+			$info['config']['lotteryEnable'] = 1;
+		}
         if ($minfo['system'] != 'android') {
             $info['ad']['ads'] = array();
         }
@@ -34,8 +40,8 @@ class SplashController extends Controller
             $info['rateTitle'] = '给个好评后，会展示更多劲爆惊喜图片，你懂的！';
             $info['rateConfirm'] = '赏你好评';
             $info['rateRefuse'] = '残忍拒绝';
-
         }
+		$info['config']['beautyEnable'] = 0;
         return $info;
     }
 }

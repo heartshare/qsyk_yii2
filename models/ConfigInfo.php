@@ -114,7 +114,7 @@ class ConfigInfo extends Model
 			return $ret;
 		}
 		$ua = $_SERVER['HTTP_USER_AGENT'];
-        if (preg_match('/([\w]+) ([\w]+) v([\d\.]+)/siU', $ua, $m)) {
+        if (preg_match('/([\w]+) ([\w]+) v([\d\.]+)/si', $ua, $m)) {
 	        $ret['app'] 		= $m[1];
 	        $ret['system'] 		= $m[2];
 	    	$versions = explode('.', $m[3]);

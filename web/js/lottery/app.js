@@ -97,7 +97,7 @@ app.config(['$locationProvider', '$routeProvider', '$httpProvider', function ($l
 app.constant('params', {
     redLimit: 6,
     blueLimit: 1,
-    baseUrl: 'http://qy1.appcq.cn:8085/'
+    baseUrl: '/'
 });
 
 app.factory('authInterceptor', function ($q, $window) {
@@ -126,7 +126,7 @@ app.service('rest', function ($http, $location, $routeParams) {
 
     return {
 
-        baseUrl: 'http://qy1.appcq.cn:8085/',
+        baseUrl: '/',
         path: undefined,
 
         models: function () {
