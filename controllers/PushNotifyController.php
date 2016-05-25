@@ -16,21 +16,9 @@ use yii\web\Controller;
 
 class PushNotifyController extends Controller
 {
-
     
-    public function actionIndex() {
-        echo "123";
-    }
-
-
-
-
     public function actionPush()
     {
-//        if (!Yii::$app->user->isGuest) {
-//            return $this->goHome();
-//        }
-//
         $model = new PushNotifyForm();
         if ($model->load(Yii::$app->request->post()) && $model->push()) {
             return $this->render('push_success');

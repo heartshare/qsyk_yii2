@@ -82,12 +82,21 @@ class ResourceController extends Controller
 
 		$request = Yii::$app->request;
 		$type = $request->get('type', 0);
+        $dynamic = $request->get('dynamic', 0);
 		$queryBuilder = Resource::find();
         $where = ['status'=>Resource::STATUS_ACTIVE];
 		if ($type) {
             $where['type'] = $type;
 		}
-		$queryBuilder = $queryBuilder->where($where)->andWhere(['>','userid',0])->orderBy('id desc');
+        if ($type == Resource::TYPE_IMAGE) {
+            $where['resource_relation.dynamic'] = $dynamic;
+        }
+
+		$queryBuilder = $queryBuilder
+            ->leftJoin('resource_relation', '`resource_relation`.`resource_id` = `resource`.`id`')
+            ->where($where)
+            ->andWhere(['>','userid',0])
+            ->orderBy('pub_time desc');
 		
         return new ActiveDataProvider([
             'query' => $queryBuilder 

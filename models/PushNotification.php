@@ -10,6 +10,7 @@ use Yii;
  *
  * @property integer $id
  * @property string $device_type
+ * @property integer $environment
  * @property string $android_content
  * @property string $ios_content
  * @property string $android_title
@@ -62,7 +63,7 @@ class PushNotification extends \yii\db\ActiveRecord
         return [
             [['device_type', 'android_content', 'ios_content', 'android_title', 'resource_id', 'status'], 'required'],
             [['device_type'], 'string'],
-            [['resource_id', 'status', 'creator', 'jpush_msg_id'], 'integer'],
+            [['environment','resource_id', 'status', 'creator', 'jpush_msg_id'], 'integer'],
             [['create_time'], 'safe'],
             [['android_content', 'ios_content'], 'string', 'max' => 1024],
             [['android_title'], 'string', 'max' => 255],
@@ -77,6 +78,7 @@ class PushNotification extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'device_type' => '设备类型',
+            'environment' => '推送环境',
             'deviceDesc' => '设备类型',
             'android_content' => '内容(android)',
             'ios_content' => '内容(ios)',

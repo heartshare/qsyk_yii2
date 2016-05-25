@@ -16,6 +16,7 @@ use yii\web\Response;
 
 class LotteryController extends Controller
 {
+    public $layout = 'mobile';
     public function actionIndex()
     {
         $user = \Yii::$app->user->identity;

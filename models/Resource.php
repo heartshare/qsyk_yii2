@@ -51,6 +51,25 @@ class Resource extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id'=>'userid']);
     }
 
+    public function getPosts() {
+        return $this->hasMany(ResourcePost::className(), ['resourceid'=>'id'])
+            ->andOnCondition(['in','status', [1,2]])
+            ->orderBy(['time' => SORT_DESC]);
+    }
+
+    public function getHotPosts() {
+        return $this->hasMany(ResourcePost::className(), ['resourceid'=>'id'])
+            ->andOnCondition(['in','status', [1,2]])
+            ->orderBy(['dig' => SORT_DESC])->limit(10);
+    }
+
+    public function getGodPosts() {
+        return $this->hasMany(ResourcePost::className(), ['resourceid'=>'id'])
+            ->andOnCondition(['in','status', [1,2]])
+            ->andOnCondition(['>','index', 0])
+            ->orderBy(['dig' => SORT_DESC])->limit(3);
+    }
+
     public function getResourceCount() {
         return $this->hasOne(ResourceCount::className(), ['resource_id'=>'id']);
     }
@@ -131,6 +150,12 @@ class Resource extends \yii\db\ActiveRecord
     public function getPubTimeElapsed() {
 //        return $this->pub_time;
         return QsBaseTime::time_get_past($this->pub_time);
+    }
+
+    public function extraFields()
+    {
+        $extraFields = ['hotPosts', 'posts', 'godPosts'];
+        return $extraFields;
     }
 
     public function fields()

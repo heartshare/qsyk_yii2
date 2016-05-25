@@ -1,4 +1,3 @@
-
 {registerCssFile url='@web/lib/angular/angular-csp.css'}
 {registerCssFile url='@web/lib/bootstrap/dist/css/bootstrap.min.css'}
 {registerCssFile url='@web/lib/angular-motion/dist/angular-motion.min.css'}
@@ -25,8 +24,6 @@
 {registerJsFile url='@web/js/lottery/modules/award/controllers/AwardCtrl.js'}
 {registerJsFile url='@web/js/lottery/modules/betting/controllers/BettingCtrl.js'}
 {registerJsFile url='@web/js/lottery/modules/pick-numbers/controllers/PickCtrl.js'}
-
-
 
 <div class="container fill">
     <div ng-view>

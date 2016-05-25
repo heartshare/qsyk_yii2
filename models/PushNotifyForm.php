@@ -19,20 +19,22 @@ use yii\base\Model;
 require_once __DIR__ . '/../components/JPush/JPush.php';
 class PushNotifyForm extends Model
 {
-    public $resourceId;
+    public $resourceId = 0;
     public $deviceType;
     public $androidTitle;
     public $iosDesc;
     public $androidDesc;
+    public $environment;
+    public $apnsProduction;
 
 
     public function rules()
     {
         return [
             // username and password are both required
-            [['resourceId', 'deviceType', 'androidDesc', 'iosDesc'], 'required'],
+            [['deviceType', 'androidDesc', 'iosDesc'], 'required'],
             ['androidTitle', 'string'],
-            ['resourceId', 'integer'],
+            [['resourceId', 'environment', 'apnsProduction'], 'integer'],
         ];
     }
     public function attributeLabels()
@@ -43,6 +45,8 @@ class PushNotifyForm extends Model
             'iosDesc' => '内容(ios)',
             'androidDesc' => '内容(android)',
             'resourceId' => '资源id',
+            'environment' => '推送环境',
+            'apnsProduction' => 'ios环境设置',
 
         ];
     }
@@ -57,6 +61,7 @@ class PushNotifyForm extends Model
             $pushNotify->ios_content = $this->iosDesc;
             $pushNotify->android_title = $this->androidTitle;
             $pushNotify->resource_id = $this->resourceId;
+            $pushNotify->environment = $this->environment;
             $pushNotify->status = PushNotification::STATUS_NO_SENT;
             $pushNotify->create_time = time();
             if (!$pushNotify->save()) {
@@ -76,14 +81,34 @@ class PushNotifyForm extends Model
                     $deviceList = ['ios'];
                     break;
             }
-            $extra = ['resourceSid'=>QsEncodeHelper::setSid($this->resourceId)];
+            $extra = null;
+            if ($this->resourceId > 0) {
+                $extra = ['resourceSid'=>QsEncodeHelper::setSid($this->resourceId)];
+            }
+
+            if ($this->environment > 0) {
+                $key = Yii::$app->params['jpushAppkeyOnline'];
+                $secret = Yii::$app->params['jpushSecretOnline'];
+
+            } else {
+                $key = Yii::$app->params['jpushAppkeyOffline'];
+                $secret = Yii::$app->params['jpushSecretOffline'];
+
+            }
+            if ($this->apnsProduction) {
+                $apnsProduction = true;
+            } else {
+                $apnsProduction = false;
+            }
+
             try {
-                $client = new JPush(Yii::$app->params['jpushAppkey'], Yii::$app->params['jpushSecret'], Yii::$app->params['jpushLog']);
+                $client = new JPush($key, $secret, Yii::$app->params['jpushLog']);
                 $result = $client->push()
                     ->setPlatform($deviceList)
                     ->addAllAudience()
                     ->addAndroidNotification($this->androidDesc, $this->androidTitle, 1, $extra)
                     ->addIosNotification($this->iosDesc, '', JPush::DISABLE_BADGE, true, 'iOS category', $extra)
+                    ->setOptions(null, null, null, $apnsProduction)
                     ->send();
 
                 if (!empty($result) && !empty($result->data->msg_id)) {

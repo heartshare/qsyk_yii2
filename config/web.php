@@ -23,7 +23,14 @@ $config = [
             'class' => 'app\components\QsEncodeHelper',
         ],
         'cache' => [
-            'class' => 'yii\caching\FileCache',
+            'class' => 'yii\caching\MemCache',
+            'servers' => [
+                [
+                    'host' => '127.0.0.1',
+                    'port' => 11211,
+                    'weight' => 100,
+                ],
+            ],
         ],
         'user' => [
             'identityClass' => 'app\models\User',
@@ -57,6 +64,7 @@ $config = [
 //            'enableStrictParsing' => true,
             'rules' => [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'resource'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'resource-tag'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'user-task'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'betting'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'award'],

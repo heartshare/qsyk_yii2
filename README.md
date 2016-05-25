@@ -4,7 +4,7 @@ API
 ===
 
 
-
+**\[REST\]**表示接口为RESTful风格接口
 **\[Auth\]**表示Header需要传Authorization
 
 示例：
@@ -76,3 +76,28 @@ API
 ### 用户任务列表\[GET\]\[Auth\]
 
        /user-tasks  
+       
+### 资源列表\[GET\]\[REST\]
+       
+       /resource
+       
+参数：
+       type=[0,1,2,3]&dynamic=[0,1]
+       
+扩展:
+       expand=godPosts[神评论],hotPosts[热门评论],posts[评论]
+       
+### 资源标签列表\[GET\]\[REST\]
+       
+       /resource-tags
+       
+参数：
+       tag=[sid]
+       
+### 评论顶\[POST\]\[Auth\]
+
+       /post/like     
+参数
+- sid : 资源sid
+         
+              

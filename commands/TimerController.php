@@ -18,13 +18,17 @@ use yii\console\Controller;
 class TimerController extends Controller
 {
     public function actionEnd($period = "") {
+        $now = date('Y-m-d H:i:s');
         if (empty($period)) {
-            $periodAr = Period::find()->where(['status'=>1])->orderBy('period_id desc')->one();
+            $periodAr = Period::find()
+                ->where(['status'=>1])
+                ->andWhere(['<', 'sale_endtime', $now])
+                ->orderBy('period_id desc')->one();
             $period = $periodAr->period_id;
         } else {
             $periodAr = Period::findOne($period);
         }
-        $now = date('Y-m-d H:i:s');
+
         if ($now >= $periodAr->sale_endtime && $periodAr->status == Period::STATUS_ACTIVE) {
             $periodAr->status = Period::STATUS_FINISH;
             if (!$periodAr->save()) {
