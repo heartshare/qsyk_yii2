@@ -31,7 +31,7 @@ app
             Picks.current_period = data.period.current.period;
             if (data.user) {
                 $scope.points = data.user.points;
-                $scope.times = data.user.points / 10;
+                $scope.times = parseInt(data.user.points / 10);
             }
         });
     }]);
