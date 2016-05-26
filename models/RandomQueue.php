@@ -8,7 +8,6 @@ use Yii;
  * This is the model class for table "random_queue".
  *
  * @property integer $type
- * @property integer $index
  * @property integer $resource_id
  */
 class RandomQueue extends \yii\db\ActiveRecord
@@ -27,8 +26,8 @@ class RandomQueue extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'index', 'resource_id'], 'required'],
-            [['type', 'index', 'resource_id'], 'integer'],
+            [['type', 'resource_id'], 'required'],
+            [['type', 'resource_id'], 'integer'],
         ];
     }
 
@@ -39,7 +38,6 @@ class RandomQueue extends \yii\db\ActiveRecord
     {
         return [
             'type' => 'Type',
-            'index' => 'Index',
             'resource_id' => 'Resource ID',
         ];
     }

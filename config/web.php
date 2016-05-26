@@ -68,6 +68,7 @@ $config = [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'user-task'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'betting'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'award'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'random'],
 
                 [
                     'class'=>'yii\rest\UrlRule',

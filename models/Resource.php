@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\commands\DataController;
 use app\components\QsBaseTime;
 use app\components\QsEncodeHelper;
 use kartik\helpers\Enum;
@@ -124,6 +125,10 @@ class Resource extends \yii\db\ActiveRecord
         return !empty($this->user) ? $this->user->user_name : '';
     }
 
+    public function getRandomCache() {
+        return $this->hasOne(RandomCache::className(), [ 'resource_id' => 'id']);
+    }
+
     public function getUserAvatar()
     {
         return !empty($this->user) ? QsEncodeHelper::setSid($this->user->avatar_img) : '';
@@ -154,7 +159,7 @@ class Resource extends \yii\db\ActiveRecord
 
     public function extraFields()
     {
-        $extraFields = ['hotPosts', 'posts', 'godPosts'];
+        $extraFields = ['hotPosts', 'posts', 'godPosts', 'randomCache'];
         return $extraFields;
     }
 

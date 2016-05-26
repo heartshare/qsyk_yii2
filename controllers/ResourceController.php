@@ -100,7 +100,7 @@ class ResourceController extends Controller
             ->where($where)
             ->andWhere(['>','userid',0])
             ->orderBy('pub_time desc');
-		
+
         return new ActiveDataProvider([
             'query' => $queryBuilder 
         ]);
