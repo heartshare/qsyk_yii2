@@ -383,14 +383,38 @@ class DataController extends Controller
 
         $startTime = mktime(date('H'), date('i'), date('s'), date('m'), date('d') - 2, date('y'));
         $endTime = mktime(date('H'), date('i'), date('s'), date('m'), date('d'), date('y'));
+        if ($type == Resource::TYPE_DYNAMIC) {
+            $query = (new Query())
+                ->select(['resource.id'])
+                ->from('resource')
+                ->leftJoin('resource_relation', '`resource_relation`.`resource_id` = `resource`.`id`')
+                ->where([
+                    'status' => Resource::STATUS_ACTIVE,
+                    'type' =>  Resource::TYPE_IMAGE,
+                    'resource_relation.dynamic'=>1
+                ]);
+        } else if ($type == Resource::TYPE_IMAGE) {
+            $query = (new Query())
+                ->select(['resource.id'])
+                ->from('resource')
+                ->leftJoin('resource_relation', '`resource_relation`.`resource_id` = `resource`.`id`')
+                ->where([
+                    'status' => Resource::STATUS_ACTIVE,
+                    'type' => $type,
+                    'resource_relation.dynamic'=>0
+                ]);
+        } else {
+            $query = (new Query())
+                ->select(['id'])
+                ->from('resource')
+                ->where([
+                    'status' => Resource::STATUS_ACTIVE,
+                    'type' => $type
+                ]);
+        }
 
-        $_row150 = (new Query())
-            ->select(['id'])
-            ->from('resource')
-            ->where([
-                'status' => Resource::STATUS_ACTIVE,
-                'type' => $type
-            ])
+        $_150query = clone $query;
+        $_row150 = $_150query
             ->andWhere(['between', 'pub_time', $startTime, $endTime])
             ->orderBy(['pub_time' => SORT_DESC])
             ->limit(150)
@@ -402,13 +426,8 @@ class DataController extends Controller
         if ($allUpdate) {
             $startTime = mktime(date('H'), date('i'), date('s'), date('m'), date('d') - 7, date('y'));
             $endTime = mktime(date('H'), date('i'), date('s'), date('m'), date('d') - 2, date('y'));
-            $_row150_300 = (new Query())
-                ->select(['id'])
-                ->from('resource')
-                ->where([
-                    'status' => Resource::STATUS_ACTIVE,
-                    'type' => $type,
-                ])
+            $_150_300query = clone $query;
+            $_row150_300 = $_150_300query
                 ->andWhere(['between', 'pub_time', $startTime, $endTime])
                 ->orderBy('RAND()')
                 ->limit(150)
@@ -419,17 +438,13 @@ class DataController extends Controller
         if ($allUpdate) {
             $startTime = mktime(date('H'), date('i'), date('s'), date('m') - 1, date('d'), date('y'));
             $endTime = mktime(date('H'), date('i'), date('s'), date('m'), date('d') - 7, date('y'));
-            $_row1k7 = (new Query())
-                ->select(['id'])
-                ->from('resource')
-                ->where([
-                    'status' => Resource::STATUS_ACTIVE,
-                    'type' => $type,
-                ])
+            $_1k7query = clone $query;
+            $_row1k7 = $_1k7query
                 ->andWhere(['between', 'pub_time', $startTime, $endTime])
                 ->orderBy('RAND()')
                 ->limit(1700)
                 ->column();
+            echo "row1700 ". count($_row1k7) ."filtered\n";
             $this->saveToDb($_row1k7, self::TYPE_INDEX_1700 + $type * 100);
         }
 

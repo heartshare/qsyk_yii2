@@ -8,6 +8,7 @@
 
 namespace app\controllers;
 
+use app\commands\DataController;
 use app\components\QsEncodeHelper;
 use app\models\Resource;
 use app\models\ResourceFavoriteForm;
@@ -85,21 +86,15 @@ class ResourceController extends Controller
 
 		$request = Yii::$app->request;
 		$type = $request->get('type', 0);
-        $dynamic = $request->get('dynamic', 0);
-		$queryBuilder = Resource::find();
-        $where = ['status'=>Resource::STATUS_ACTIVE];
-		if ($type) {
-            $where['type'] = $type;
-		}
-        if ($type == Resource::TYPE_IMAGE) {
-            $where['resource_relation.dynamic'] = $dynamic;
-        }
 
-		$queryBuilder = $queryBuilder
-            ->leftJoin('resource_relation', '`resource_relation`.`resource_id` = `resource`.`id`')
-            ->where($where)
-            ->andWhere(['>','userid',0])
-            ->orderBy('pub_time desc');
+
+		$queryBuilder = Resource::find()
+            ->leftJoin('random_cache', '`random_cache`.`resource_id` = `resource`.`id`')
+            ->where([
+                'status'=>Resource::STATUS_ACTIVE,
+                '`random_cache`.`category`'=>DataController::CATEGORY_INDEX + $type * 100,
+            ])
+            ->orderBy('`random_cache`.`index` asc');
 
         return new ActiveDataProvider([
             'query' => $queryBuilder 

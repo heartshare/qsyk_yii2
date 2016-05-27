@@ -82,7 +82,8 @@ API
        /resources
        
 参数：
-       type=[0,1,2,3]&dynamic=[0,1]
+       type=[0-5];0全部1文字2图片3视频4语音5动图
+         
        
 扩展:
        expand=godPosts[神评论],hotPosts[热门评论],posts[评论]
