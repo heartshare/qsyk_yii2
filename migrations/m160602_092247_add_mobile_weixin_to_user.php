@@ -12,8 +12,8 @@ class m160602_092247_add_mobile_weixin_to_user extends Migration
      */
     public function up()
     {
-        $this->addColumn('user', 'mobile', $this->string(64));
-        $this->addColumn('user', 'weixin', $this->string(255));
+        $this->addColumn('user', 'mobile', $this->string());
+        $this->addColumn('user', 'weixin', $this->string());
     }
 
     /**

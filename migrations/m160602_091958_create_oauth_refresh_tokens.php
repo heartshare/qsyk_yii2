@@ -1,6 +1,7 @@
 <?php
 
 use yii\db\Migration;
+use yii\db\Schema;
 
 /**
  * Handles the creation for table `oauth_refresh_tokens`.
@@ -13,11 +14,12 @@ class m160602_091958_create_oauth_refresh_tokens extends Migration
     public function up()
     {
         $this->createTable('oauth_refresh_tokens', [
-            'refresh_token' => $this->string(40)->primaryKey(),
-            'client_id' => $this->string(80),
-            'user_id' => $this->string(255),
-            'expires' => $this->timestamp(),
-            'scope' => $this->text(),
+            'id' => Schema::TYPE_PK,
+            'refresh_token' => Schema::TYPE_STRING . ' NOT NULL',
+            'client_id' => Schema::TYPE_STRING . ' NOT NULL',
+            'user_id' => Schema::TYPE_STRING,
+            'expires' => Schema::TYPE_TIMESTAMP . ' on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
+            'scope' => Schema::TYPE_TEXT,
         ]);
     }
 
