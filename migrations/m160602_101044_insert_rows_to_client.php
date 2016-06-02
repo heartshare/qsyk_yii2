@@ -6,15 +6,15 @@ class m160602_101044_insert_rows_to_client extends Migration
 {
     public function up()
     {
-        $this->insert('oauth_client', [
+        $this->insert('oauth_clients', [
             'client_id' => 'old_version',
             'client_secret' => 'old_version_secret',
         ]);
-        $this->insert('oauth_client', [
+        $this->insert('oauth_clients', [
             'client_id' => 'test_android_client',
             'client_secret' => \app\components\QsImageHelper::getRandString(12),
         ]);
-        $this->insert('oauth_client', [
+        $this->insert('oauth_clients', [
             'client_id' => 'test_ios_client',
             'client_secret' => \app\components\QsImageHelper::getRandString(12),
         ]);
