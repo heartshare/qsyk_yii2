@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User;
 use yii\db\Migration;
 
 class m160602_101044_insert_rows_to_client extends Migration
@@ -12,16 +13,16 @@ class m160602_101044_insert_rows_to_client extends Migration
         ]);
         $this->insert('oauth_clients', [
             'client_id' => 'test_android_client',
-            'client_secret' => \app\components\QsImageHelper::getRandString(12),
+            'client_secret' => $this->getRandString(12),
         ]);
         $this->insert('oauth_clients', [
             'client_id' => 'test_ios_client',
-            'client_secret' => \app\components\QsImageHelper::getRandString(12),
+            'client_secret' => $this->getRandString(12),
         ]);
 
-        $users = \app\models\User::find()->where(
+        $users = User::find()->where(
             ['!=','auth_key','']
-        )->andWhere(['type'=>\app\models\User::DEVICE_TYPE])->all();
+        )->andWhere(['type'=>0])->all();
         foreach($users as $user) {
             $this->insert('oauth_access_tokens', [
                 'access_token' => $user->auth_key,
@@ -40,9 +41,31 @@ class m160602_101044_insert_rows_to_client extends Migration
 
     public function down()
     {
-        echo "m160602_101044_insert_rows_to_client cannot be reverted.\n";
+//        echo "m160602_101044_insert_rows_to_client cannot be reverted.\n";
+        $this->delete('oauth_clients', [
+            'client_id' => 'old_version',
+        ]);
+        $this->delete('oauth_clients', [
+            'client_id' => 'test_android_client',
+        ]);
+        $this->delete('oauth_clients', [
+            'client_id' => 'test_ios_client',
+        ]);
+//        return false;
+    }
 
-        return false;
+    /*
+* 获取指定长度的随机字符串
+*/
+    public function getRandString($length){
+        $str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
+        $result = '';
+        $l = strlen($str);
+        for($i = 0;$i < $length;$i ++){
+            $num = rand(0, $l-1);
+            $result .= $str[$num];
+        }
+        return $result;
     }
 
     /*
