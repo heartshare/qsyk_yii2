@@ -10,6 +10,8 @@ namespace app\controllers;
 
 use app\models\Resource;
 use app\models\ResourceFavorite;
+use app\models\v2\FavImportForm;
+use app\models\v2\UserImportForm;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBearerAuth;
@@ -25,7 +27,7 @@ class FavoriteController extends Controller
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBearerAuth::className(),
-            'only' => ['index', 'view'],
+            'only' => ['index', 'view', 'import-like', 'import-fav'],
         ];
         $behaviors['contentNegotiator'] = [
             'class' => ContentNegotiator::className(),
@@ -53,5 +55,27 @@ class FavoriteController extends Controller
     {
         return ResourceFavorite::findOne($id);
     }
+
+    public function actionImportFav()
+    {
+        $model = new UserImportForm();
+        if ($model->load(Yii::$app->getRequest()->get(), '') && $model->importFav()) {
+            return ["status"=>0, "message"=>""];
+        } else {
+            return ["status"=>1, "message"=>implode(",", $model->getFirstErrors())];
+        }
+    }
+
+    public function actionImportLike()
+    {
+        $model = new UserImportForm();
+        if ($model->load(Yii::$app->getRequest()->get(), '') && $model->importLike()) {
+            return ["status"=>0, "message"=>""];
+        } else {
+            return ["status"=>1, "message"=>implode(",", $model->getFirstErrors())];
+        }
+    }
+
+
 
 }

@@ -39,6 +39,8 @@ class ResourceCount extends \yii\db\ActiveRecord
         return [
             [['resource_hits', 'resource_hits_daily', 'resource_hits_week', 'resource_post', 'resource_post_daily', 'resource_post_week', 'resource_pre_dig', 'resource_dig', 'resource_bury', 'resource_collect', 'resource_share', 'resource_share_click'], 'required'],
             [['resource_hits', 'resource_hits_daily', 'resource_hits_week', 'resource_post', 'resource_post_daily', 'resource_post_week', 'resource_pre_dig', 'resource_dig', 'resource_bury', 'resource_collect', 'resource_share', 'resource_share_click'], 'integer'],
+            [['resource_hits', 'resource_hits_daily', 'resource_hits_week', 'resource_post', 'resource_post_daily', 'resource_post_week', 'resource_pre_dig', 'resource_dig', 'resource_bury', 'resource_collect', 'resource_share', 'resource_share_click'], 'default', 'value' =>0],
+
         ];
     }
 

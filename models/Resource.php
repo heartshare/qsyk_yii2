@@ -62,6 +62,7 @@ class Resource extends \yii\db\ActiveRecord
     public function getHotPosts() {
         return $this->hasMany(ResourcePost::className(), ['resourceid'=>'id'])
             ->andOnCondition(['in','status', [1,2]])
+            ->andOnCondition(['>','dig', 10])
             ->orderBy(['dig' => SORT_DESC])->limit(10);
     }
 

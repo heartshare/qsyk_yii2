@@ -12,9 +12,7 @@ class RegisterForm extends Model
 {
     public $uuid;
     public $user = null;
-
-//    private $_user = false;
-
+    public $client = 'old_version';
 
     /**
      * @return array the validation rules.
@@ -72,15 +70,16 @@ class RegisterForm extends Model
                 $newUser->setPassword(\Yii::$app->params['password']);
                 $newUser->generateAuthKey();
                 $newUser->generatePasswordResetToken();
+                if (!$newUser->save() || !$newUser->generateToken($this->client)) {
+                    $this->addErrors($newUser->getErrors());
+                    return false;
+                }
+                $this->user = $newUser;
+                return true;
             } else {
-                $newUser->generateAuthKey();
-            }
-            if (!$newUser->save()) {
-                $this->addErrors($newUser->getErrors());
+                $this->addError('', '用户已存在');
                 return false;
             }
-            $this->user = $newUser;
-            return true;
         }
         return false;
     }

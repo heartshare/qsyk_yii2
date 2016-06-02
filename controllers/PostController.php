@@ -10,6 +10,7 @@ namespace app\controllers;
 use app\components\QsEncodeHelper;
 use app\models\PostLikeForm;
 use app\models\Resource;
+use app\models\v2\PostForm;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBearerAuth;
@@ -44,5 +45,14 @@ class PostController extends Controller
             return ["status"=>0, "message"=>""];
         }
         return ["status"=>1, "message"=>implode(",", $likeForm->getFirstErrors())];
+    }
+
+    public function actionSend()
+    {
+        $sendForm = new PostForm();
+        if ($sendForm->load(Yii::$app->getRequest()->post(), '') && $sendForm->send()) {
+            return ["status"=>0, "message"=>""];
+        }
+        return ["status"=>1, "message"=>implode(",", $sendForm->getFirstErrors())];
     }
 }
