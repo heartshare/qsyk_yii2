@@ -3,9 +3,10 @@
 API
 ===
 
-
+注：
 **\[REST\]**表示接口为RESTful风格接口
 **\[Auth\]**表示Header需要传Authorization
+参数\*表示参数可选
 
 示例：
 
@@ -100,5 +101,102 @@ API
        /post/like     
 参数
 - sid : 资源sid
+
+### 手机号注册\[POST\]\[Auth\]
+
+       /v2/user/register   
+参数
+- mobile : 手机号
+- password : 密码
+- client : client id
+- client_secret : client secret
+- nickname : 昵称，中英文数字下划线，长度2-12
+- avatarFile\* : 上传头像文件
+
+### 第三方注册\[POST\]\[Auth\]
+
+       /v2/user/third-register   
+参数
+- from : 值为qq，weixin，weibo
+- oid : 第三方唯一标示
+- client : client id
+- client_secret : client secret
+- nickname : 昵称，第三方请求的昵称
+- avatarFile\* : 上传头像文件
+- avatar\* : 上传头像url
+
+
+### 手机号登录\[POST\]\[Auth\]
+
+       /v2/user/login   
+参数
+- mobile : 手机号
+- password : 密码
+- client : client id
+- client_secret : client secret
+
+
+### 第三方登录\[POST\]\[Auth\]
+
+       /v2/user/third-login   
+参数
+- from : 值为qq，weixin，weibo
+- oid : 第三方唯一标示
+- client : client id
+- client_secret : client secret
+
+
+### 请求短信验证码\[POST\]
+
+       /v2/user/request-code   
+参数
+- mobile : 手机号
+
+### 验证短信验证码\[POST\]
+
+       /v2/user/verify-code   
+参数
+- mobile : 手机号
+- code : 验证码
+
+### 修改资料：密码，昵称，性别，头像\[POST\]\[Auth\]
+
+       /v2/user/edit
+参数
+- nick_name\* : 昵称，中英文数字下划线，长度2-12，不允许重复，3个月只能改一次
+- sex\* : 性别
+- avatarFile\* : 头像文件
+- password\* : 密码
+
+说明：
+    需要改哪项传对应字段，不需要修改的字段千万不要传！
+    
+### 手机号绑定\[POST\]\[Auth\]
+
+       /v2/user/bind
+参数
+- mobile : 手机号
+- password : 密码
+
+
+### Token过期更新\[POST\]\[Auth\]
+
+       /v2/user/refresh
+参数
+- refresh_token : 刷新token
+- client : client id
+- client_secret : client secret
+
+### 发评论\[POST\]\[Auth\]
+
+       /post/send
+参数
+- content : 评论内容
+- sid : 资源sid
+- reply\* : 回复评论的sid
+
+
+
+
          
               
