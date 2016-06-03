@@ -43,7 +43,7 @@ class ResourcePost extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['resourceid', 'post_id', 'post_userid', 'content', 'status', 'type', 'time', 'dig', 'bury', 'user', 'useragent', 'ip', 'referer'], 'required'],
+            [['resourceid', 'content', 'status',  'time',  'user'], 'required'],
             [['resourceid', 'post_id', 'post_userid', 'status', 'type', 'time', 'last_update_time', 'dig', 'bury', 'user'], 'integer'],
             [['content', 'useragent'], 'string'],
             [['quoteids', 'referer'], 'string', 'max' => 400],
@@ -68,7 +68,7 @@ class ResourcePost extends \yii\db\ActiveRecord
             'post_userid' => 'Post Userid',
             'content' => 'Content',
             'status' => 'Status',
-            'type' => '评论类型，默认为0网友发布，1为编辑发布，2为采集',
+            'type' => '评论类型',
             'time' => 'Time',
             'last_update_time' => 'Last Update Time',
             'dig' => 'Dig',

@@ -57,8 +57,6 @@ class SiteController extends Controller
         $uuid = Yii::$app->request->get('uuid');
         $redirectUri = Yii::$app->request->get('redirect_uri');
         if (!Yii::$app->user->isGuest) {
-//            echo "isGuest";
-//            return;
             return $this->redirect([$redirectUri . '/index/#!']);
         }
 

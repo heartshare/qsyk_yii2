@@ -25,7 +25,7 @@ class PostController extends Controller
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBearerAuth::className(),
-            'only' => ['like'],
+            'only' => ['like', 'send'],
         ];
         $behaviors['contentNegotiator'] = [
             'class' => ContentNegotiator::className(),

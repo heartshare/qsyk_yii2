@@ -11,19 +11,38 @@ span.circle-text {
     font-size: 0.8em;
     border: 1px solid dimgrey;
 }
+@media (max-device-height: 667px){
+    /* some CSS here */
 
-span.circle-text-medium {
-    display: block;
-    height: 36px;
-    width: 36px;
-    line-height: 36px;
-    -moz-border-radius: 18px; /* or 50% */
-    border-radius: 18px; /* or 50% */
-
-    text-align: center;
-    font-size: 0.9em;
-    border: 1px solid dimgrey;
+    span.circle-text-medium {
+        display: block;
+        min-height: 28px;
+        min-width: 28px;
+        -moz-border-radius: 14px; /* or 50% */
+        border-radius: 14px; /* or 50% */
+        line-height: 28px;
+        text-align: center;
+        font-size: 0.9em;
+        border: 1px solid dimgrey;
+    }
 }
+
+@media (min-device-height: 667px) {
+    /* some CSS here */
+
+    span.circle-text-medium {
+        display: block;
+        height: 36px;
+        width: 36px;
+        -moz-border-radius: 18px; /* or 50% */
+        border-radius: 18px; /* or 50% */
+        line-height: 36px;
+        text-align: center;
+        font-size: 0.9em;
+        border: 1px solid dimgrey;
+    }
+}
+
 
 span.circle-text-small {
     display: block;

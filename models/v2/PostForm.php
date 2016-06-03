@@ -96,6 +96,7 @@ class PostForm extends Model
                 }
             }
 
+
             if (!$post->save()) {
                 $this->addErrors($post->getErrors());
                 return false;

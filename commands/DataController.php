@@ -313,12 +313,13 @@ class DataController extends Controller
         $endTime = mktime(date('H'), date('i'), date('s'), date('m'), date('d'), date('y'));
 
         $time_start = microtime(true);
-
+        $now = time();
         $_row300 = (new Query())
             ->select(['id'])
             ->from('resource')
             ->where(['status' => Resource::STATUS_ACTIVE])
             ->andWhere(['between', 'pub_time', $startTime, $endTime])
+            ->andWhere('valid_time = 0 or valid_time > :time', [':time' => $now])
             ->orderBy(['pub_time' => SORT_DESC])
             ->limit(300)
             ->column();
@@ -342,6 +343,7 @@ class DataController extends Controller
                 ->from('resource')
                 ->where(['status' => Resource::STATUS_ACTIVE])
                 ->andWhere(['between', 'pub_time', $startTime, $endTime])
+                ->andWhere('valid_time = 0 or valid_time > :time', [':time' => $now])
                 ->orderBy('RAND()')
                 ->limit(450)
                 ->column();
@@ -363,6 +365,7 @@ class DataController extends Controller
                 ->from('resource')
                 ->where(['status' => Resource::STATUS_ACTIVE])
                 ->andWhere(['between', 'pub_time', $startTime, $endTime])
+                ->andWhere('valid_time = 0 or valid_time > :time', [':time' => $now])
                 ->orderBy('RAND()')
                 ->limit(7000)
                 ->column();
@@ -380,7 +383,7 @@ class DataController extends Controller
 
 
         $time_start = microtime(true);
-
+        $now = time();
         $startTime = mktime(date('H'), date('i'), date('s'), date('m'), date('d') - 2, date('y'));
         $endTime = mktime(date('H'), date('i'), date('s'), date('m'), date('d'), date('y'));
         if ($type == Resource::TYPE_DYNAMIC) {
@@ -416,6 +419,7 @@ class DataController extends Controller
         $_150query = clone $query;
         $_row150 = $_150query
             ->andWhere(['between', 'pub_time', $startTime, $endTime])
+            ->andWhere('valid_time = 0 or valid_time > :time', [':time' => $now])
             ->orderBy(['pub_time' => SORT_DESC])
             ->limit(150)
             ->column();
@@ -429,6 +433,7 @@ class DataController extends Controller
             $_150_300query = clone $query;
             $_row150_300 = $_150_300query
                 ->andWhere(['between', 'pub_time', $startTime, $endTime])
+                ->andWhere('valid_time = 0 or valid_time > :time', [':time' => $now])
                 ->orderBy('RAND()')
                 ->limit(150)
                 ->column();
@@ -441,6 +446,7 @@ class DataController extends Controller
             $_1k7query = clone $query;
             $_row1k7 = $_1k7query
                 ->andWhere(['between', 'pub_time', $startTime, $endTime])
+                ->andWhere('valid_time = 0 or valid_time > :time', [':time' => $now])
                 ->orderBy('RAND()')
                 ->limit(1700)
                 ->column();

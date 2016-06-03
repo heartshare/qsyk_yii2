@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\components\QsEncodeHelper;
 use app\components\QsImageHelper;
 use Yii;
 use yii\db\ActiveRecord;
@@ -104,9 +105,13 @@ class User extends ActiveRecord implements IdentityInterface
 //            $this->auth_key = '1234';
         }
 
-        $fields = ['accessToken','refreshToken','auth_key', 'points', 'nick_name'];
+        $fields = ['accessToken','refreshToken','auth_key', 'points', 'nick_name', 'avatarSid'];
         // remove fields that contain sensitive information
         return $fields;
+    }
+
+    public function getAvatarSid() {
+        return QsEncodeHelper::setSid($this->avatar_img);
     }
 
 
@@ -367,6 +372,14 @@ class User extends ActiveRecord implements IdentityInterface
                 return false;
             }
             return true;
+        } else {
+            $token->refresh_token = Yii::$app->security->generateRandomString();
+            $token->expires = date('Y-m-d H:i:s', time() + 30 * 86400);
+            if (!$token->save()) {
+                $this->addErrors($token->getErrors());
+                return false;
+            }
+            return true;
         }
         return false;
     }
@@ -389,6 +402,11 @@ class User extends ActiveRecord implements IdentityInterface
                 $this->addErrors($token->getErrors());
                 return false;
             }
+
+            if (!$this->generateRefreshToken($client)) {
+                $this->addError('', '生成刷新token失败');
+                return false;
+            }
             return true;
         } else {
             $refToken = OauthRefreshTokens::findOne([
@@ -403,9 +421,16 @@ class User extends ActiveRecord implements IdentityInterface
                     $this->addErrors($token->getErrors());
                     return false;
                 }
+
+                if (!$this->generateRefreshToken($client)) {
+                    $this->addError('', '生成刷新token失败');
+                    return false;
+                }
                 return true;
+            } else {
+                $this->addError('', '刷新token验证失败');
+                return false;
             }
-            return false;
         }
     }
     /**

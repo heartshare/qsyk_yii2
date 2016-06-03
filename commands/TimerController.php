@@ -24,9 +24,12 @@ class TimerController extends Controller
                 ->where(['status'=>1])
                 ->andWhere(['<', 'sale_endtime', $now])
                 ->orderBy('period_id desc')->one();
-            $period = $periodAr->period_id;
+//            $period = $periodAr->period_id;
         } else {
             $periodAr = Period::findOne($period);
+        }
+        if (empty($periodAr)) {
+            return;
         }
 
         if ($now >= $periodAr->sale_endtime && $periodAr->status == Period::STATUS_ACTIVE) {
