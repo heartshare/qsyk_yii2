@@ -71,8 +71,26 @@ API
 
        /user/info  
        
+参数
+- client : client id
+
 可选参数：
        expand=taskList
+       
+返回
+
+    {
+      "status": 0,
+      "message": "",
+      "user": {
+        "accessToken": "", //token，仅当client有值时有效
+        "refreshToken": "",//refreshToken，仅当client有值时有效
+        "auth_key": "S8Mc8HRW9JPGWgEEcadPOh1F-hdlMVVX", //auth_key，旧版本token
+        "points": 10,
+        "nick_name": null,
+        "avatarSid": "aAwsokgc840" //头像sid
+      }
+    }
        
 ### 用户任务列表\[GET\]\[Auth\]
 
@@ -113,6 +131,11 @@ API
 - nickname : 昵称，中英文数字下划线，长度2-12
 - avatarFile\* : 上传头像文件
 
+返回
+- status : 0成功1失败
+- message : 消息
+- user\* : 成功时返回userInfo，参考/user/info
+
 ### 第三方注册\[POST\]\[Auth\]
 
        /v2/user/third-register   
@@ -125,6 +148,11 @@ API
 - avatarFile\* : 上传头像文件
 - avatar\* : 上传头像url
 
+返回
+- status : 0成功1失败
+- message : 消息
+- user\* : 成功时返回userInfo，参考/user/info
+
 
 ### 手机号登录\[POST\]\[Auth\]
 
@@ -134,6 +162,11 @@ API
 - password : 密码
 - client : client id
 - client_secret : client secret
+
+返回
+- status : 0成功1失败
+- message : 消息
+- user\* : 成功时返回userInfo，参考/user/info
 
 
 ### 第三方登录\[POST\]\[Auth\]
@@ -145,6 +178,11 @@ API
 - client : client id
 - client_secret : client secret
 
+返回
+- status : 0成功1失败
+- message : 消息
+- user\* : 成功时返回userInfo，参考/user/info
+
 
 ### 请求短信验证码\[POST\]
 
@@ -152,12 +190,20 @@ API
 参数
 - mobile : 手机号
 
+返回
+- status : 0成功1失败
+- message : 消息
+
 ### 验证短信验证码\[POST\]
 
        /v2/user/verify-code   
 参数
 - mobile : 手机号
 - code : 验证码
+
+返回
+- status : 0成功1失败
+- message : 消息
 
 ### 修改资料：密码，昵称，性别，头像\[POST\]\[Auth\]
 
@@ -167,6 +213,10 @@ API
 - sex\* : 性别
 - avatarFile\* : 头像文件
 - password\* : 密码
+
+返回
+- status : 0成功1失败
+- message : 消息
 
 说明：
     需要改哪项传对应字段，不需要修改的字段千万不要传！
@@ -178,6 +228,10 @@ API
 - mobile : 手机号
 - password : 密码
 
+返回
+- status : 0成功1失败
+- message : 消息
+
 
 ### Token过期更新\[POST\]\[Auth\]
 
@@ -187,6 +241,11 @@ API
 - client : client id
 - client_secret : client secret
 
+返回
+- status : 0成功1失败
+- message : 消息
+- user\* : 成功时返回userInfo，参考/user/info
+
 ### 发评论\[POST\]\[Auth\]
 
        /post/send
@@ -194,6 +253,10 @@ API
 - content : 评论内容
 - sid : 资源sid
 - reply\* : 回复评论的sid
+
+返回
+- status : 0成功1失败
+- message : 消息
 
 
 
