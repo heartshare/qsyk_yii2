@@ -6,7 +6,7 @@ class m160606_103949_insert_rows_to_random_cache extends Migration
 {
     public function up()
     {
-        $this->addColumn('random_cache', 'updated_at', $this->timestamp());
+        $this->addColumn('random_cache', 'updated_at', $this->string());
     }
 
     public function down()
