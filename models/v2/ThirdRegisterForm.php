@@ -39,7 +39,8 @@ class ThirdRegisterForm extends Model
             [['nickname'], 'trim'],
             ['nickname', 'filter', 'filter' => function ($value) {
                 // normalize phone input here
-                return str_replace('/[^\w-]/', '', $value);
+                ///^[a-zA-Z0-9_\-\x{4e00}-\x{9fa5}]{2,12}$/u
+                return preg_replace('/[^a-zA-Z0-9_\-\x{4e00}-\x{9fa5}]/u', '', $this->nickname);
             }],
             [['nickname', 'avatar', 'client', 'client_secret', 'oid', 'from'],  'string'],
             ['client', 'validateClient'],
@@ -58,7 +59,7 @@ class ThirdRegisterForm extends Model
             'client_id'=>$this->client,
             'client_secret'=>$this->client_secret,
         ]);
-        if (empty($oClient)) {
+            if (empty($oClient)) {
             $this->addError($attribute, "Cannot find the spec client.");
         }
     }
@@ -79,10 +80,9 @@ class ThirdRegisterForm extends Model
     {
         $oldUser = Yii::$app->user->identity;
         if ($this->validate()) {
+
             $newUser = User::find()
-                ->where(['qq'=>$this->oid])
-                ->orWhere(['weibo'=>$this->oid])
-                ->orWhere(['weixin'=>$this->oid])
+                ->where([$this->from=>$this->oid])
                 ->one();
             if (empty($newUser)) {
                 if($this->validateNickname($this->nickname)) {
@@ -110,7 +110,7 @@ class ThirdRegisterForm extends Model
                 $newUser = new User();
                 $newUser->setAttributes([
                     'user_name'=>$this->from  . '_' . $this->oid,
-                    'nickname'=>$this->nickname,
+                    'nick_name'=>$this->nickname,
                     'created_at'=>date('Y-m-d H:i:s'),
                     'updated_at'=>date('Y-m-d H:i:s', time() - 86400 * 90),
                     'type'=>User::THIRD_TYPE,

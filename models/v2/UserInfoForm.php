@@ -33,7 +33,7 @@ class UserInfoForm extends Model
             [['sex','avatar_img'], 'integer'],
             [['avatar'], 'string'],
             ['nick_name', 'trim'],
-            ['nick_name', 'match', 'pattern' => '/^[A-Za-z0-9_\-\x80-\xff\s\']{2,12}$/i'],
+            ['nick_name', 'match', 'pattern' => '/^[a-zA-Z0-9_\-\x{4e00}-\x{9fa5}]{2,12}$/u'],
             ['nick_name', 'validateDuplicate'],
             [['avatarFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, gif'],
             ['nick_name', 'validateFrequency'],

@@ -221,12 +221,32 @@ API
 说明：
     需要改哪项传对应字段，不需要修改的字段千万不要传！
     
-### 手机号绑定\[POST\]\[Auth\]
+### 昵称验证\[POST\]
 
-       /v2/user/bind
+       /v2/user/name-valid
+参数
+- nickname : 昵称
+
+返回
+- status : 0成功1失败
+- message : 消息
+
+### 手机号验证\[POST\]
+
+       /v2/user/mobile-valid
 参数
 - mobile : 手机号
-- password : 密码
+
+返回
+- status : 0成功1失败
+- message : 消息
+
+### 第三方验证\[POST\]
+
+       /v2/user/third-valid
+参数
+- oid : 第三方oid
+- from : 值为qq，weixin，weibo
 
 返回
 - status : 0成功1失败

@@ -10,6 +10,7 @@ namespace app\models\v2;
 
 
 use app\models\User;
+use Yii;
 use yii\base\Model;
 
 class BindForm extends Model
@@ -26,8 +27,18 @@ class BindForm extends Model
             [['mobile', 'password'],'required'],
             ['mobile', 'match', 'pattern' => '/^[\d]{11}$/i'],
             ['password', 'string', 'min' => 6, 'max' => 20],
+            ['mobile', 'validateIsVerified'],
             ['mobile','validateDuplicate'],
         ];
+    }
+
+    public function validateIsVerified($attribute, $params)
+    {
+        $cache = yii::$app->cache;
+        $verifyKey = "verify_" . $this->mobile;
+        if (!$cache->get($verifyKey)) {
+            $this->addError($attribute, "该手机号注册超时，请重新请求验证码");
+        }
     }
 
     public function validateDuplicate($attribute, $params)

@@ -69,7 +69,16 @@ class VerifyForm extends Model
             $codeKey = "code_" . $this->mobile;
             $verifyCode = $cache->get($codeKey);
             if ($verifyCode) {
-               return $verifyCode == $this->code;
+               if ($verifyCode == $this->code) {
+                   $verifyKey = "verify_" . $this->mobile;
+                   return $cache->set($verifyKey, true, 300);
+               } else {
+                   $this->addError('', '验证码不正确');
+                   return false;
+               }
+            } else {
+                $this->addError('', '验证码请求超时，请重新请求');
+                return false;
             }
         }
         return false;

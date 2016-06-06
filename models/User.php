@@ -365,7 +365,7 @@ class User extends ActiveRecord implements IdentityInterface
                 'refresh_token'=>Yii::$app->security->generateRandomString(),
                 'client_id'=>$client,
                 'user_id'=>strval($this->id),
-                'expires'=>date('Y-m-d H:i:s', time() + 30 * 86400),
+                'expires'=>date('Y-m-d H:i:s', time() + 360 * 86400),
             ], false);
             if (!$token->save()) {
                 $this->addErrors($token->getErrors());
@@ -374,14 +374,13 @@ class User extends ActiveRecord implements IdentityInterface
             return true;
         } else {
             $token->refresh_token = Yii::$app->security->generateRandomString();
-            $token->expires = date('Y-m-d H:i:s', time() + 30 * 86400);
+            $token->expires = date('Y-m-d H:i:s', time() + 360 * 86400);
             if (!$token->save()) {
                 $this->addErrors($token->getErrors());
                 return false;
             }
             return true;
         }
-        return false;
     }
 
     public function generateToken($client = null, $refreshToken = null, $skipRefreshToken = false)
@@ -398,7 +397,7 @@ class User extends ActiveRecord implements IdentityInterface
                 'user_id'=>strval($this->id),
                 'expires'=>date('Y-m-d H:i:s', time() + 30 * 86400),
             ], false);
-            if (!$token->save() || !$this->generateRefreshToken($client)) {
+            if (!$token->save()) {
                 $this->addErrors($token->getErrors());
                 return false;
             }
@@ -417,15 +416,15 @@ class User extends ActiveRecord implements IdentityInterface
             if (!empty($refToken) || $skipRefreshToken) {
                 $token->access_token = Yii::$app->security->generateRandomString();
                 $token->expires = date('Y-m-d H:i:s', time() + 30 * 86400);
-                if (!$token->save() || !$this->generateRefreshToken($client)) {
+                if (!$token->save()) {
                     $this->addErrors($token->getErrors());
                     return false;
                 }
 
-                if (!$this->generateRefreshToken($client)) {
-                    $this->addError('', '生成刷新token失败');
-                    return false;
-                }
+//                if (!$this->generateRefreshToken($client)) {
+//                    $this->addError('', '生成刷新token失败');
+//                    return false;
+//                }
                 return true;
             } else {
                 $this->addError('', '刷新token验证失败');

@@ -14,8 +14,11 @@ use app\models\SignHistorySearch;
 use app\models\User;
 use app\models\UserTaskSearch;
 use app\models\v2\BindForm;
+use app\models\v2\MobileValidForm;
+use app\models\v2\NameValidForm;
 use app\models\v2\RegisterForm;
 use app\models\v2\ThirdRegisterForm;
+use app\models\v2\ThirdValidForm;
 use app\models\v2\TokenForm;
 use app\models\v2\UserInfoForm;
 use app\models\v2\VerifyForm;
@@ -133,6 +136,30 @@ class UserController extends Controller
         $model = new TokenForm();
         if ($model->load(Yii::$app->request->post(), '') && $model->revoke()) {
             return ["status"=>0, "message"=>"", "user"=>$model->user];
+        }
+        return ["status"=>1, "message"=>implode("\n", $model->getFirstErrors())];
+    }
+
+    public function actionMobileValid() {
+        $model = new MobileValidForm();
+        if ($model->load(Yii::$app->request->post(), '') && $model->validate()) {
+            return ["status"=>0, "message"=>""];
+        }
+        return ["status"=>1, "message"=>implode("\n", $model->getFirstErrors())];
+    }
+
+    public function actionThirdValid() {
+        $model = new ThirdValidForm();
+        if ($model->load(Yii::$app->request->post(), '') && $model->validate()) {
+            return ["status"=>0, "message"=>""];
+        }
+        return ["status"=>1, "message"=>implode("\n", $model->getFirstErrors())];
+    }
+
+    public function actionNameValid() {
+        $model = new NameValidForm();
+        if ($model->load(Yii::$app->request->post(), '') && $model->validate()) {
+            return ["status"=>0, "message"=>""];
         }
         return ["status"=>1, "message"=>implode("\n", $model->getFirstErrors())];
     }

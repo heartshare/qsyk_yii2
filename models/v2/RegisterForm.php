@@ -37,16 +37,25 @@ class RegisterForm extends Model
             [['nickname', 'client', 'client_secret', 'mobile', 'password'], 'required'],
             ['mobile', 'match', 'pattern' => '/^[\d]{11}$/i'],
             [['nickname'], 'trim'],
-            ['nickname', 'match', 'pattern' => '/^[A-Za-z0-9_\-\x80-\xff\s\']{2,12}$/i'],
+            ['nickname', 'match', 'pattern' => '/^[a-zA-Z0-9_\-\x{4e00}-\x{9fa5}]{2,12}$/i'],
             ['password', 'string', 'min' => 6, 'max' => 20],
             [['nickname', 'avatar', 'client', 'client_secret'],  'string'],
             ['client', 'validateClient'],
             [['avatarFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, gif'],
             ['nickname', 'validateNickname'],
+            ['mobile', 'validateIsVerified'],
         ];
     }
 
 
+    public function validateIsVerified($attribute, $params)
+    {
+        $cache = yii::$app->cache;
+        $verifyKey = "verify_" . $this->mobile;
+        if (!$cache->get($verifyKey)) {
+            $this->addError($attribute, "该手机号注册超时，请重新请求验证码");
+        }
+    }
     public function validateClient($attribute, $params)
     {
         $oClient = OauthClients::findOne([
