@@ -10,6 +10,7 @@ use Yii;
  * @property integer $category
  * @property integer $index
  * @property integer $resource_id
+ * @property string $updated_at
  */
 class RandomCache extends \yii\db\ActiveRecord
 {

@@ -501,6 +501,7 @@ class DataController extends Controller
                 $random->index = $baseIdx + $idx + 1;
             }
             $random->resource_id = $row;
+            $random->updated_at = date('Y-m-d H:i:s');
             if (!$random->save()) {
                 var_dump($random->getErrors());
                 exit;
