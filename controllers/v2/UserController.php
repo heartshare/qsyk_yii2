@@ -150,7 +150,7 @@ class UserController extends Controller
 
     public function actionThirdValid() {
         $model = new ThirdValidForm();
-        if ($model->load(Yii::$app->request->post(), '') && $model->validate()) {
+        if ($model->load(Yii::$app->request->post(), '') && $model->validate() && $model->validateDuplicated('oid')) {
             return ["status"=>0, "message"=>""];
         }
         return ["status"=>1, "message"=>implode("\n", $model->getFirstErrors())];

@@ -74,12 +74,9 @@ class RegisterForm extends Model
                     $this->addErrors($newUser->getErrors());
                     return false;
                 }
-                $this->user = $newUser;
-                return true;
-            } else {
-                $this->addError('', '用户已存在');
-                return false;
             }
+            $this->user = $newUser;
+            return true;
         }
         return false;
     }
