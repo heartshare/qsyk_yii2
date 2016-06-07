@@ -38,6 +38,14 @@ class ResourceController extends Controller
                 'application/json' => Response::FORMAT_JSON,
             ],
         ];
+	$behaviors[] =  [
+            'class' => 'yii\filters\HttpCache',
+            'only' => ['index'],
+            'lastModified' => function ($action, $params) {
+                $q = new \yii\db\Query();
+                return $q->from('random_cache')->max('updated_at');
+            },
+        ];
 
         return $behaviors;
     }
